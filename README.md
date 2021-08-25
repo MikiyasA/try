@@ -17,7 +17,6 @@ This is a project made for the ALX software engineering program.
 | [man\_1\_simple\_shell](man_1_simple_shell) | This is the manpage for the simple\_shell, where we can find examples and the correct syntax of the commands.|
 | [shell.h](shell.h) |This is the header file with the prototypes of the functions.|
 | [shell.c](shell.c) |main function - Prints the prompt in a loop and calls the functions to accept arguments and executes the command.|
-* `main` - the main function of the program
 | [vector.c](vector.c) |populates argv (which is array of string pointers which are arguments to `execve`).|
 | [\_getenv.c](\_getenv.c) |It performs like the builtin function `getenv`.
 | [path\_l\_list.c](path\_l\_list.c)| It creates a linked list of directories found in PATH.
