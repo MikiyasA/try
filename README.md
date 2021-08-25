@@ -33,7 +33,6 @@ simple\_shell is designed to run in the `Ubuntu 20.04 LTS` linux environment and
    - Change directories into the repository: `cd simple_shell`
    - Compile: `gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh`
    - Run the shell in interactive mode: `./hsh`
-   - Or run the shell in non-interactive mode: example `echo "/bin/ls" | ./hsh`
 
 ## Usage
 
