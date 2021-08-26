@@ -19,7 +19,8 @@ int main(int ac, char *av[])
 	buffer = malloc(size);
 	while (1)
 	{
-		printf("$ ");
+		if (isatty(STDIN_FILENO))
+			printf("$ ");
 		if (getline(&buffer, &size, stdin) == EOF)
 			return (0);
 
