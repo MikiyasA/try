@@ -1,7 +1,6 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
-
 typedef struct Node
 {
 	char *str;
@@ -18,7 +17,7 @@ typedef struct Node
 
 extern char **environ;
 
-char **populate_argv(char *, char *, node_t *);
+char **populate_argv(char *, char *);
 char *_getenv(const char *name);
 char *check_in_path(char *, node_t *);
 void path_l_list(node_t **);

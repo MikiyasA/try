@@ -3,10 +3,12 @@
 /**
  * main - Function creates child process for handling
  * input commands to the parrent process.
+ * @ac: Number of cmd arguments
+ * @av: Cmd argument vector
  *
  * Return: 0
  */
-int main(void)
+int main(int ac, char *av[])
 {
 	int id, err_num = 0;
 	char *buffer, **argv;
@@ -17,14 +19,11 @@ int main(void)
 	buffer = malloc(size);
 	while (1)
 	{
-		printf("#cisfun$ ");
+		printf("$ ");
 		if (getline(&buffer, &size, stdin) == EOF)
-		{
-			printf("\nexit\n");
 			return (0);
-		}
 
-		argv = populate_argv(buffer, " ", head);
+		argv = populate_argv(buffer, " ");
 
 		id = fork();
 		if (id != 0)
@@ -35,6 +34,6 @@ int main(void)
 	if (id == 0)
 		err_num = execve(argv[0], argv, NULL);
 	if (err_num == -1)
-		perror(strerror(errno));
+		fprintf(stderr, "%s: %s\n", av[ac - ac], strerror(errno));
 	return (0);
 }

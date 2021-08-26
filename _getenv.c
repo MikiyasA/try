@@ -8,19 +8,18 @@
  */
 char *_getenv(const char *name)
 {
-	char *token, **local_env;
+	int i = 0;
+	char *token;
 
-	local_env = environ;
-
-	while (*local_env)
+	while (*(environ + i))
 	{
-		token = strtok(*environ, "=");
+		token = strtok(*(environ + i), "=");
 		if (!strcmp(name, token))
 		{
 			token = strtok(NULL, "=");
 			return (strdup(token));
 		}
-		local_env++;
+		i++;
 	}
 	return (NULL);
 }
