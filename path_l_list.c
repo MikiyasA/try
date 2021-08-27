@@ -12,14 +12,14 @@ void path_l_list(node_t **head)
 	char *token, *path;
 	node_t *new;
 
-	path = _getenv("PATH");
+	path = strdup(_getenv("PATH"));
 	token = strtok(path, ":");
 
 	while (token != NULL)
 	{
 		new = malloc(sizeof(node_t));
 
-		new->str = strdup(token);
+		new->str = token;
 		new->next = *head;
 
 		*head = new;

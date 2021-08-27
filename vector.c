@@ -21,10 +21,11 @@ char **populate_argv(char *buffer, char *delim)
 		if (token == NULL || !strcmp(token, "\n"))
 			break;
 	}
+	free(duplicate);
 	argv = malloc(sizeof(char *) * i);
 	duplicate = strdup(buffer), i = 1;
 	token = strtok(duplicate, delim);
-	argv[0] = token;
+	argv[0] = strdup(token);
 	if (argv[0][strlen(argv[0]) - 1] == '\n')
 		strtok(argv[0], "\n");
 	while (1)
@@ -39,5 +40,6 @@ char **populate_argv(char *buffer, char *delim)
 	}
 	if (i >= 2)
 		strtok(argv[i - 1], "\n");
+	free(duplicate);
 	return (argv);
 }

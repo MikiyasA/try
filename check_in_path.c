@@ -3,21 +3,19 @@
 /**
  * check_in_path - Function searches PATH for the existence
  * of @av0 program
- * @av0: First space delimited string passed on command line
- * @head: Pointer to PATH linked list
- * Return: Absolute path of @av0, NULL if @av0 is not found
+ * @buffer: First delimited string passed on command line
+ * Return: 0 if it exists, -1 otherwise
  */
-char *check_in_path(char *av0, node_t *head)
+ssize_t check_in_path(char *buffer)
 {
 	struct stat st;
-	char *str = NULL;
+	char **av = populate_argv(buffer, " ");
 
-	while (head != NULL)
+	if (av[1] == NULL && stat(av[0], &st) == 0)
 	{
-		str = strcat(strcat(head->str, "/"), av0);
-		if (stat(str, &st) == 0)
-			break;
-		head = head->next;
+		free(av[0]), free(av);
+		return (0);
 	}
-	return (str);
+	free(av[0]), free(av);
+	return (-1);
 }

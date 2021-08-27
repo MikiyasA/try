@@ -27,7 +27,8 @@ extern char **environ;
 
 char **populate_argv(char *, char *);
 char *_getenv(const char *name);
-char *check_in_path(char *, node_t *);
+ssize_t  check_in_path(char *);
 void path_l_list(node_t **);
+ssize_t check_empty(char *);
 
 #endif /* _SHELL_H_ */

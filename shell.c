@@ -11,37 +11,35 @@
 int main(int ac, char *av[])
 {
 	int id, err_num = 0;
-	char *buffer, **argv, *token;
-	node_t *head;
+	char *buffer = NULL, **argv;
 	size_t size = 1;
 
-	path_l_list(&head);
-	buffer = malloc(size);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
 		if (getline(&buffer, &size, stdin) == EOF)
-			return (0);
-		id = fork();
-		if (id != 0)
-			wait(NULL);
+		{
+			free(buffer);
+			if (isatty(STDIN_FILENO))
+				printf("\nexit\n");
+			return (err_num);
+		} else if (check_empty(buffer) == 0)
+			continue;
+		if (check_in_path(buffer) == 0)
+			id = fork();
 		else
+		{
+			fprintf(stderr, "%s: %s\n", av[ac - ac], "No such file or directory");
+			continue;
+		}
+		if (id == 0)
 			break;
+		wait(NULL);
 	}
-	argv = malloc(sizeof(char *) * 2);
-	argv[0] = strtok(buffer, " ");
-	argv[1] = NULL;
-	token = strtok(NULL, " ");
-	if (token != NULL && strcmp(token, "\n") != 0)
-	{
-		fprintf(stderr, "%s: %s\n", av[ac - ac], "No such file or directory");
-		return (1);
-	}
-	if (token == NULL)
-		strtok(argv[0], "\n");
-	if (id == 0)
-		err_num = execve(argv[0], argv, NULL);
+	argv = populate_argv(buffer, " ");
+	err_num = execve(argv[0], argv, NULL);
+	free(buffer), free(argv[0]), free(argv);
 	if (err_num == -1)
 		fprintf(stderr, "%s: %s\n", av[ac - ac], strerror(errno));
 	return (0);
