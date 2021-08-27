@@ -1,6 +1,14 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
+/**
+ * struct Node - Singly linked list
+ * @str: String - (malloc'ed string)
+ * @next: Points to the next node
+ *
+ * Description: Singly linked list node structure
+ * for PATH directories
+ */
 typedef struct Node
 {
 	char *str;
