@@ -11,7 +11,7 @@ ssize_t check_in_path(char *buffer)
 	struct stat st;
 	char **av = populate_argv(buffer, " ");
 
-	if (av[1] == NULL && stat(av[0], &st) == 0)
+	if (stat(av[0], &st) == 0)
 	{
 		free(av[0]), free(av);
 		return (0);
