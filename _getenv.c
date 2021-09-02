@@ -8,18 +8,25 @@
  */
 char *_getenv(const char *name)
 {
-	int i = 0;
-	char *token;
+	int i, j, k;
+	
+        k = 0;
+        while (*(environ + k))
+        {
+                i = 0, j = 0;
 
-	while (*(environ + i))
-	{
-		token = strtok(*(environ + i), "=");
-		if (!strcmp(name, token))
-		{
-			token = strtok(NULL, "=");
-			return (strdup(token));
-		}
-		i++;
-	}
+                while (*(*(environ + k) + i) != '=')
+                        i++;
+                while (j < i)
+                {
+                        if (*(name + j) == *(*(environ + k) + j))
+                                j++;
+                        else
+                                break;
+                }
+                if (j == i)
+                        return (*(environ + k) + i + 1);
+                k++;
+        }
 	return (NULL);
 }

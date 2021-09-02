@@ -11,22 +11,22 @@
 int main(int ac, char *av[])
 {
 	int id, err_num = 0;
-	char *buffer = NULL, **argv;
-	size_t size = 1;
+	size_t size = 120;
+	char **argv, *buffer = malloc(size);
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			printf("$ ");
+			printf("[%s@%s]$ ", _getenv("USER"), "Linux");
 		if (getline(&buffer, &size, stdin) == EOF)
 		{
-			free(buffer);
+                        free(buffer);
 			if (isatty(STDIN_FILENO))
 				printf("\nexit\n");
 			return (err_num);
-		} else if (check_empty(buffer) == 0)
+		} else if (check_empty(&buffer) == 0)
 			continue;
-		if (check_in_path(buffer) == 0)
+		if (check_in_path(&buffer) == 0)
 			id = fork();
 		else
 		{
@@ -35,11 +35,12 @@ int main(int ac, char *av[])
 		}
 		if (id == 0)
 			break;
-		wait(NULL);
+		wait(NULL); 
 	}
 	argv = populate_argv(buffer, " ");
-	err_num = execve(argv[0], argv, NULL);
-	free(buffer), free(argv[0]), free(argv);
+	setenv("SHELL", "hsh", 1);
+	err_num = execve(argv[0], argv, environ);
+	free(buffer), free(argv[0]), free(argv[1]), free(argv);
 	if (err_num == -1)
 		fprintf(stderr, "%s: %s\n", av[ac - ac], strerror(errno));
 	return (0);

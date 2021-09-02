@@ -26,9 +26,12 @@ typedef struct Node
 extern char **environ;
 
 char **populate_argv(char *, char *);
+void make_new_buffer(char **, char *);
+void path_l_list(node_t **, char *);
 char *_getenv(const char *name);
-ssize_t  check_in_path(char *);
-void path_l_list(node_t **);
-ssize_t check_empty(char *);
+ssize_t  check_in_path(char **);
+ssize_t check_empty(char **);
+void free_list(node_t *);
+void free_av(char **);
 
 #endif /* _SHELL_H_ */
